@@ -4,16 +4,13 @@ import 'components/categories/category_page.dart';
 import 'components/categories/parametre.dart';
 
 void main() async {
-  // S'assurer que Flutter est initialisé
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialiser les managers avec la persistance
   final appSettings = AppSettings();
-  final favoritesManager = FavoritesManager(); // Décommenté
+  final favoritesManager = FavoritesManager();
 
-  // Charger les données sauvegardées
   await appSettings.initialize();
-  await favoritesManager.initialize(); // Décommenté
+  await favoritesManager.initialize();
 
   runApp(MyApp(settings: appSettings));
 }
@@ -51,7 +48,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    // Attendre que les settings soient chargés
     if (!_settings.isInitialized) {
       return const MaterialApp(
         debugShowCheckedModeBanner: false,

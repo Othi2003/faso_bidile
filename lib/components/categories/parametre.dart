@@ -1,7 +1,3 @@
-// ======================================================
-// Fichier: lib/models/app_settings.dart
-// ======================================================
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,40 +6,32 @@ class AppSettings extends ChangeNotifier {
   factory AppSettings() => _instance;
   AppSettings._internal();
 
-  // Clés pour SharedPreferences
   static const String _themeModeKey = 'theme_mode';
   static const String _colorThemeKey = 'color_theme';
 
-  // Thème
   ThemeMode _themeMode = ThemeMode.light;
   String _colorTheme = 'default';
 
-  // Indicateur de chargement initial
   bool _isInitialized = false;
 
-  // Getters
   ThemeMode get themeMode => _themeMode;
   String get colorTheme => _colorTheme;
   bool get isInitialized => _isInitialized;
 
-  // Initialisation - à appeler au démarrage de l'app
   Future<void> initialize() async {
     if (_isInitialized) return;
 
     final prefs = await SharedPreferences.getInstance();
 
-    // Charger le mode thème
     final themeModeIndex = prefs.getInt(_themeModeKey) ?? ThemeMode.light.index;
     _themeMode = ThemeMode.values[themeModeIndex];
 
-    // Charger le thème de couleur
     _colorTheme = prefs.getString(_colorThemeKey) ?? 'default';
 
     _isInitialized = true;
     notifyListeners();
   }
 
-  // Méthodes de mise à jour avec sauvegarde
   Future<void> setThemeMode(ThemeMode mode) async {
     _themeMode = mode;
     final prefs = await SharedPreferences.getInstance();
@@ -58,7 +46,6 @@ class AppSettings extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Couleur primaire selon le thème sélectionné
   Color get primaryColor {
     switch (_colorTheme) {
       case 'blue':
@@ -74,7 +61,6 @@ class AppSettings extends ChangeNotifier {
     }
   }
 
-  // Couleur de background adaptée
   Color getBackgroundColor(bool isDark) {
     if (isDark) {
       return Colors.grey[900]!;
@@ -94,7 +80,6 @@ class AppSettings extends ChangeNotifier {
     }
   }
 
-  // Couleur claire pour la navigation
   Color getNavigationBackgroundColor(bool isDark) {
     if (isDark) {
       return Colors.grey[850]!;
@@ -114,7 +99,6 @@ class AppSettings extends ChangeNotifier {
     }
   }
 
-  // Obtenir les couleurs du thème
   ColorScheme getColorScheme(Brightness brightness) {
     return ColorScheme.fromSeed(
         seedColor: primaryColor,
@@ -122,7 +106,6 @@ class AppSettings extends ChangeNotifier {
     );
   }
 
-  // Réinitialiser les paramètres
   Future<void> resetToDefaults() async {
     _themeMode = ThemeMode.light;
     _colorTheme = 'default';
@@ -191,7 +174,6 @@ class _SettingsPageState extends State<SettingsPage> {
               child: ListView(
                 padding: const EdgeInsets.all(16),
                 children: [
-                  // Section Apparence
                   _buildSection(
                     'Apparence',
                     Icons.palette,
@@ -203,7 +185,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                   const SizedBox(height: 20),
 
-                  // Section À propos
                   _buildSection(
                     'À propos',
                     Icons.info,
@@ -316,7 +297,6 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  // Méthodes utilitaires
   String _getThemeModeText() {
     switch (_settings.themeMode) {
       case ThemeMode.light:
@@ -347,7 +327,6 @@ class _SettingsPageState extends State<SettingsPage> {
     return _settings.primaryColor;
   }
 
-  // Dialogues
   void _showThemeDialog() {
     showDialog(
       context: context,

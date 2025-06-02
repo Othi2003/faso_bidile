@@ -1,11 +1,10 @@
-// 2. Modifiez votre FavoritesPage pour accepter le callback
 import 'parametre.dart';
 import 'package:flutter/material.dart';
 
 import 'category_page.dart';
 
 class FavoritesPage extends StatefulWidget {
-  final VoidCallback? onNavigateToCategories; // Nouveau paramètre
+  final VoidCallback? onNavigateToCategories;
 
   const FavoritesPage({super.key, this.onNavigateToCategories});
 

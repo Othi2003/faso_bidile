@@ -3,15 +3,13 @@ import 'package:flutter/material.dart';
 import 'categories/category_page.dart';
 import 'categories/parametre.dart';
 
-// Constantes d'images
 class ImagePath {
   static String accueil = 'assets/img1.png';
   static String explore = 'assets/img2.png';
 }
 
-// Page d'accueil principale
 class HomePage extends StatefulWidget {
-  final VoidCallback? onNavigateToCategories; // Nouveau paramètre
+  final VoidCallback? onNavigateToCategories;
 
   const HomePage({super.key, this.onNavigateToCategories});
 
@@ -53,7 +51,6 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.all(w * 0.05),
           child: Column(
             children: [
-              // Message de bienvenue en haut
               SizedBox(height: h * 0.02),
               Text(
                 'Bienvenue sur\nFaso Bidilé !',
@@ -66,12 +63,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
 
-              // Espace flexible pour centrer le contenu principal
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Question principale centrée
                     Text(
                       'Que souhaitez-vous cuisiner aujourd\'hui ?',
                       textAlign: TextAlign.center,
@@ -85,7 +80,6 @@ class _HomePageState extends State<HomePage> {
 
                     SizedBox(height: h * 0.03),
 
-                    // Image principale avec overlay coloré
                     Container(
                       height: h * 0.25,
                       width: w,
@@ -103,7 +97,6 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(20),
                         child: Stack(
                           children: [
-                            // Image de fond
                             Container(
                               width: w,
                               height: h * 0.25,
@@ -114,7 +107,6 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ),
-                            // Overlay gradient avec couleur thématique
                             Container(
                               width: w,
                               height: h * 0.25,
@@ -137,7 +129,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
 
-              // Section finale en bas
               Container(
                 width: w,
                 padding: const EdgeInsets.all(20),
@@ -159,7 +150,6 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Icon decoratif avec couleur thématique
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
@@ -179,7 +169,6 @@ class _HomePageState extends State<HomePage> {
 
                     const SizedBox(height: 12),
 
-                    // Phrase descriptive
                     Text(
                       'Nous vous proposons les meilleures\nrecettes culinaires du Faso',
                       textAlign: TextAlign.center,
@@ -193,7 +182,6 @@ class _HomePageState extends State<HomePage> {
 
                     const SizedBox(height: 16),
 
-                    // Bouton "Voir plus" avec couleur thématique
                     Container(
                       width: w * 0.5,
                       height: 50,
@@ -215,11 +203,9 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: ElevatedButton(
                         onPressed: () {
-                          // Utiliser le callback pour naviguer vers l'onglet Catégories
                           if (widget.onNavigateToCategories != null) {
                             widget.onNavigateToCategories!();
                           } else {
-                            // Fallback : navigation directe si pas de callback
                             Navigator.push(
                               context,
                               MaterialPageRoute(

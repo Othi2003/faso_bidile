@@ -1,10 +1,7 @@
-// ======================================================
-// Fichier 1: categories_page_updated.dart - Page des catégories avec thèmes
-// ======================================================
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/images_path.dart';
-import 'parametre.dart'; // Import pour AppSettings
+import 'parametre.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key});
@@ -40,7 +37,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
     final w = MediaQuery.of(context).size.width;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    // Liste des catégories avec leurs images
     final List<Map<String, dynamic>> categories = [
       {
         'name': 'Entrées',
@@ -1006,10 +1002,6 @@ class RecipeData {
   }
 }
 
-// ======================================================
-// Fichier 2: modern_recipe_card_updated.dart - Carte de recette avec thèmes
-// ======================================================
-
 class ModernRecipeCard extends StatefulWidget {
   final Map<String, dynamic> recipe;
 
@@ -1074,7 +1066,6 @@ class _ModernRecipeCardState extends State<ModernRecipeCard> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Image avec bouton favoris
               Stack(
                 children: [
                   // Image
@@ -1094,13 +1085,10 @@ class _ModernRecipeCardState extends State<ModernRecipeCard> {
                     right: 8,
                     child: GestureDetector(
                       onTap: () async {
-                        // Sauvegarder l'état actuel AVANT la modification
                         final wasAlreadyFavorite = _favoritesManager.isFavorite(_recipeId);
 
-                        // Attendre que la modification soit terminée
                         await _favoritesManager.toggleFavorite(_recipeId);
 
-                        // Vérifier que le widget est encore monté avant d'afficher le SnackBar
                         if (mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -1137,13 +1125,11 @@ class _ModernRecipeCardState extends State<ModernRecipeCard> {
                 ],
               ),
 
-              // Informations de la recette
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Nom de la recette
                     Text(
                       widget.recipe['name'],
                       style: TextStyle(
@@ -1156,12 +1142,9 @@ class _ModernRecipeCardState extends State<ModernRecipeCard> {
                     ),
 
                     const SizedBox(height: 4),
-
-                    // Ligne avec temps de cuisson
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // Temps de cuisson avec icône
                         Row(
                           children: [
                             Icon(
@@ -1191,10 +1174,6 @@ class _ModernRecipeCardState extends State<ModernRecipeCard> {
     );
   }
 }
-
-// ======================================================
-// Fichier 3: category_detail_updated.dart - Page de détail de catégorie avec thèmes
-// ======================================================
 
 class CategoryDetailPage extends StatefulWidget {
   final String categoryName;
@@ -1230,10 +1209,8 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    // Obtenir les données des recettes
     final allRecipes = RecipeData.getRecipeDetails();
 
-    // Filtrer les recettes par catégorie
     List<Map<String, dynamic>> recipes = allRecipes.values
         .where((recipe) => recipe['category'] == widget.categoryName)
         .toList();
@@ -1301,7 +1278,6 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
   late int servings;
   int _currentTab = 0;
 
-  // Contrôleurs de scroll séparés pour chaque onglet
   final ScrollController _ingredientsScrollController = ScrollController();
   final ScrollController _stepsScrollController = ScrollController();
 
@@ -1317,7 +1293,6 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
   void dispose() {
     _favoritesManager.removeListener(_onFavoritesChanged);
     _settings.removeListener(_onSettingsChanged);
-    // Disposer les contrôleurs de scroll
     _ingredientsScrollController.dispose();
     _stepsScrollController.dispose();
     super.dispose();
@@ -1337,7 +1312,6 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
 
   String get _recipeId => widget.recipe['id']?.toString() ?? widget.recipe['name'];
 
-  // Fonction pour calculer les quantités proportionnelles
   String _calculateQuantity(String originalQuantity, int originalServings, int newServings) {
     if (originalQuantity.contains(RegExp(r'\d'))) {
       final regex = RegExp(r'(\d+(?:\.\d+)?)');
@@ -1361,7 +1335,6 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
       backgroundColor: _settings.getBackgroundColor(isDark),
       body: Stack(
         children: [
-          // Image de fond
           Positioned(
             top: 0,
             left: 0,
@@ -1374,7 +1347,6 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
             ),
           ),
 
-          // Boutons supérieurs
           Positioned(
             top: MediaQuery.of(context).padding.top,
             left: 0,
@@ -1384,7 +1356,6 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Bouton retour
                   Container(
                     decoration: BoxDecoration(
                       color: _settings.primaryColor.withOpacity(0.8),
@@ -1402,7 +1373,6 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                     ),
                   ),
 
-                  // Bouton favoris
                   Container(
                     decoration: BoxDecoration(
                       color: _settings.primaryColor.withOpacity(0.8),
@@ -1420,13 +1390,10 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                         color: isFavorite ? Colors.red : Colors.white,
                       ),
                       onPressed: () async {
-                        // Sauvegarder l'état actuel AVANT la modification
                         final wasAlreadyFavorite = _favoritesManager.isFavorite(_recipeId);
 
-                        // Attendre que la modification soit terminée
                         await _favoritesManager.toggleFavorite(_recipeId);
 
-                        // Vérifier que le widget est encore monté avant d'afficher le SnackBar
                         if (mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -1453,7 +1420,6 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
             ),
           ),
 
-          // Badge de catégorie
           Positioned(
             top: MediaQuery.of(context).size.height * 0.06,
             left: 0,
@@ -1476,7 +1442,6 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
             ),
           ),
 
-          // Contenu principal
           Positioned(
             top: (MediaQuery.of(context).size.height * 0.4) - 24,
             left: 0,
@@ -1494,7 +1459,6 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Titre
                   Text(
                     widget.recipe['name'],
                     style: TextStyle(
@@ -1507,7 +1471,6 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
 
                   const SizedBox(height: 10),
 
-                  // Informations de temps
                   Column(
                     children: [
                       Container(
@@ -1537,7 +1500,6 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
 
                   const SizedBox(height: 10),
 
-                  // Portions
                   Row(
                     children: [
                       Text(
@@ -1599,7 +1561,6 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
 
                   const SizedBox(height: 20),
 
-                  // Onglets
                   Row(
                     children: [
                       _buildTabButton(0, 'Ingrédients'),
@@ -1610,7 +1571,6 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
 
                   const SizedBox(height: 20),
 
-                  // Contenu des onglets avec scroll complètement isolé
                   Expanded(
                     child: IndexedStack(
                       index: _currentTab,
@@ -1663,10 +1623,10 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
     final ingredients = widget.recipe['ingredients'] as List<Map<String, dynamic>>? ?? [];
 
     return Container(
-      key: const ValueKey('ingredients_tab'), // Clé unique pour préserver l'état
+      key: const ValueKey('ingredients_tab'),
       child: SingleChildScrollView(
         controller: _ingredientsScrollController,
-        physics: const ClampingScrollPhysics(), // Physics différentes
+        physics: const ClampingScrollPhysics(),
         child: Column(
           children: ingredients.map((ingredient) {
             final adjustedQuantity = _calculateQuantity(
@@ -1690,10 +1650,10 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
     final steps = widget.recipe['steps'] as List<String>? ?? [];
 
     return Container(
-      key: const ValueKey('steps_tab'), // Clé unique pour préserver l'état
+      key: const ValueKey('steps_tab'),
       child: SingleChildScrollView(
         controller: _stepsScrollController,
-        physics: const ClampingScrollPhysics(), // Physics différentes
+        physics: const ClampingScrollPhysics(),
         child: Column(
           children: steps.asMap().entries.map((entry) {
             int index = entry.key;
@@ -1802,17 +1762,14 @@ class FavoritesManager extends ChangeNotifier {
   factory FavoritesManager() => _instance;
   FavoritesManager._internal();
 
-  // Clé pour SharedPreferences
   static const String _favoritesKey = 'favorite_recipes';
 
   final Set<String> _favoriteRecipeIds = <String>{};
   bool _isInitialized = false;
 
-  // Getters
   Set<String> get favoriteRecipeIds => Set.unmodifiable(_favoriteRecipeIds);
   bool get isInitialized => _isInitialized;
 
-  // Initialisation - à appeler au démarrage de l'app
   Future<void> initialize() async {
     if (_isInitialized) return;
 
@@ -1826,18 +1783,15 @@ class FavoritesManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Sauvegarder les favoris
   Future<void> _saveFavorites() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setStringList(_favoritesKey, _favoriteRecipeIds.toList());
   }
 
-  // Vérifier si une recette est favorite
   bool isFavorite(String recipeId) {
     return _favoriteRecipeIds.contains(recipeId);
   }
 
-  // Ajouter/retirer une recette des favoris
   Future<void> toggleFavorite(String recipeId) async {
     if (_favoriteRecipeIds.contains(recipeId)) {
       _favoriteRecipeIds.remove(recipeId);
@@ -1848,7 +1802,6 @@ class FavoritesManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Ajouter aux favoris
   Future<void> addToFavorites(String recipeId) async {
     if (!_favoriteRecipeIds.contains(recipeId)) {
       _favoriteRecipeIds.add(recipeId);
@@ -1857,7 +1810,6 @@ class FavoritesManager extends ChangeNotifier {
     }
   }
 
-  // Retirer des favoris
   Future<void> removeFromFavorites(String recipeId) async {
     if (_favoriteRecipeIds.contains(recipeId)) {
       _favoriteRecipeIds.remove(recipeId);
@@ -1866,10 +1818,8 @@ class FavoritesManager extends ChangeNotifier {
     }
   }
 
-  // Obtenir le nombre de favoris
   int get favoritesCount => _favoriteRecipeIds.length;
 
-  // Vider tous les favoris
   Future<void> clearFavorites() async {
     _favoriteRecipeIds.clear();
     await _saveFavorites();

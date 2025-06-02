@@ -62,7 +62,6 @@ class _PageAccueilState extends State<PageAccueil> {
                   height: h * .243,
                   width: w,
                   decoration: BoxDecoration(
-                    // Utilisation de la couleur de background du système
                     color: _settings.getBackgroundColor(isDark),
                     borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(40),
@@ -81,7 +80,6 @@ class _PageAccueilState extends State<PageAccueil> {
                             style: TextStyle(
                               fontSize: w * .053,
                               fontWeight: FontWeight.w800,
-                              // Couleur du texte adaptée au thème
                               color: isDark ? Colors.white : Colors.black,
                             ),
                           ),
@@ -91,7 +89,6 @@ class _PageAccueilState extends State<PageAccueil> {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w400,
-                              // Couleur du texte adaptée au thème
                               color: isDark ? Colors.white70 : Colors.black87,
                             ),
                           ),
@@ -108,17 +105,12 @@ class _PageAccueilState extends State<PageAccueil> {
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                // Couleur de fond du bouton selon le thème sélectionné
                                 backgroundColor: _settings.primaryColor,
-                                // Couleur du texte (blanc pour contraster)
                                 foregroundColor: Colors.white,
-                                // Hauteur du bouton
                                 minimumSize: Size(double.infinity, h * 0.06),
-                                // Bordures arrondies
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(24),
                                 ),
-                                // Effet d'élévation
                                 elevation: 3,
                               ),
                               child: const Text(

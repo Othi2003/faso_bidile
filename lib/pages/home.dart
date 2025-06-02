@@ -1,4 +1,3 @@
-// 1. Modifiez votre classe Home pour exposer une méthode de navigation
 import 'package:faso_bidile/components/bar_navigation.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +29,6 @@ class _HomeState extends State<Home> {
     super.dispose();
   }
 
-  // Méthode pour naviguer vers un onglet spécifique
   void navigateToTab(int index) {
     pageController.animateToPage(
       index,
@@ -61,7 +59,7 @@ class _HomeState extends State<Home> {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           HomePage(
-            onNavigateToCategories: () => navigateToTab(1), // Ajoutez le callback ici aussi
+            onNavigateToCategories: () => navigateToTab(1),
           ),
           const CategoriesPage(),
           FavoritesPage(
